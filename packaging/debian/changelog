@@ -1,0 +1,7 @@
+bob-der (@VERSION@) unstable; urgency=medium
+
+  * Package the Claude-style terminal interface and autonomous tool runtime.
+  * Include read-only plan mode, deep reasoning, one subagent, and Gemma Eyes.
+  * Bundle pure-Python runtime dependencies for direct installation.
+
+ -- bob-der <bob-der@example.com>  Tue, 01 Sep 2026 00:00:00 -0400

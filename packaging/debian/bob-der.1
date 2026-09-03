@@ -1,0 +1,78 @@
+.TH BOB-DER 1 "September 2026" "bob-der @VERSION@" "User Commands"
+.SH NAME
+bob-der \- autonomous Ollama coding agent for the terminal
+.SH SYNOPSIS
+.B bob-der
+.RI [ options ]
+.RI [ task ... ]
+.SH DESCRIPTION
+.B bob-der
+runs an interactive terminal coding agent. The primary model is
+nemotron-3-super:cloud, the only subagent is gpt-oss:20b-cloud, and
+gemma4:31b-cloud supplies vision capabilities.
+.PP
+Without a task, bob-der opens its interactive Textual interface. With a task,
+it performs a one-shot autonomous run.
+.PP
+On a newly configured computer, run
+.B bob-der-setup
+once to install Ollama, sign in, and prepare the required cloud models. Run
+.B bob-der-setup --check
+to inspect the local Ollama setup without changing it.
+.PP
+The prompt accepts multiline pasted text. Press Enter to insert a newline and
+Ctrl+Enter to submit. Shift+Enter and Ctrl+S are alternate submit shortcuts.
+.SH OPTIONS
+.TP
+.BR \-C ", " \-\-directory " " PATH
+Use PATH as the working directory.
+.TP
+.BR \-\-plan
+Inspect with read-only tools and return an implementation plan.
+.TP
+.BR \-\-deep
+Reason, plan, revise, execute, and verify without a reasoning-step limit.
+.TP
+.BR \-\-max-steps " " N
+Set the autonomous step ceiling; zero disables the ceiling.
+.TP
+.BR \-\-model-timeout " " SECONDS
+Set the model timeout; zero disables the timeout.
+.TP
+.BR \-v ", " \-\-verbose
+Show reasoning summaries and tool output.
+.TP
+.BR \-q ", " \-\-quiet
+Print only the final response.
+.TP
+.BR \-\-check-update
+Check GitHub Releases for a newer version.
+.TP
+.BR \-\-update
+Download a newer Ubuntu package and verify its SHA-256 checksum.
+.TP
+.BR \-h ", " \-\-help
+Show command-line help.
+.SH INTERACTIVE COMMANDS
+.TP
+.B /plan
+Toggle read-only plan mode.
+.TP
+.B /deep
+Toggle deep reasoning mode.
+.TP
+.B /copy
+Copy the latest answer.
+.TP
+.B /update
+Download and verify a newer Ubuntu package from GitHub Releases.
+.TP
+.B /help
+Show all interactive commands.
+.SH FILES
+.TP
+.I ~/.bob-der/sessions/
+Saved conversation sessions.
+.SH SEE ALSO
+.BR ollama (1),
+.BR bwrap (1)

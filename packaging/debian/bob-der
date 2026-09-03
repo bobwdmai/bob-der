@@ -1,0 +1,19 @@
+#!/bin/sh
+set -eu
+
+if ! command -v ollama >/dev/null 2>&1; then
+    printf '%s\n' \
+        "bob-der needs Ollama on this computer." \
+        "Run: bob-der-setup" >&2
+    exit 127
+fi
+
+BOB_DER_LIB=/usr/lib/bob-der
+if [ -n "${PYTHONPATH:-}" ]; then
+    export PYTHONPATH="$BOB_DER_LIB:$PYTHONPATH"
+else
+    export PYTHONPATH="$BOB_DER_LIB"
+fi
+export PYTHONDONTWRITEBYTECODE=1
+
+exec /usr/bin/python3 -m bob_der.cli "$@"

@@ -1,0 +1,50 @@
+#!/bin/sh
+set -eu
+
+MODE=${1:-setup}
+if [ "$MODE" != "setup" ] && [ "$MODE" != "--check" ]; then
+    printf '%s\n' "Usage: bob-der-setup [--check]" >&2
+    exit 2
+fi
+
+if [ "$(uname -s)" != "Linux" ]; then
+    printf '%s\n' "bob-der-setup supports Linux only." >&2
+    exit 1
+fi
+
+if ! command -v ollama >/dev/null 2>&1; then
+    if [ "$MODE" = "--check" ]; then
+        printf '%s\n' "Ollama: missing"
+        printf '%s\n' "Run bob-der-setup to install and configure it."
+        exit 1
+    fi
+    if ! command -v curl >/dev/null 2>&1; then
+        printf '%s\n' "curl is required. Install it with: sudo apt install curl ca-certificates" >&2
+        exit 1
+    fi
+    printf '%s\n' "Installing Ollama using the official https://ollama.com/install.sh installer..."
+    curl -fsSL https://ollama.com/install.sh | sh
+fi
+
+printf 'Ollama: '
+ollama --version
+
+if [ "$MODE" = "--check" ]; then
+    printf '%s\n' "Cloud model access:"
+    ollama ls
+    exit 0
+fi
+
+printf '%s\n' "Sign in to Ollama so this computer can use cloud models."
+ollama signin
+
+for model in \
+    nemotron-3-super:cloud \
+    gpt-oss:20b-cloud \
+    gemma4:31b-cloud
+do
+    printf '%s\n' "Preparing $model..."
+    ollama pull "$model"
+done
+
+printf '%s\n' "Setup complete. Start the agent with: bob-der"

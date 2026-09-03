@@ -1,0 +1,18 @@
+Package: bob-der
+Version: @VERSION@
+Section: devel
+Priority: optional
+Architecture: @ARCHITECTURE@
+Maintainer: bob-der <bob-der@example.com>
+Installed-Size: @INSTALLED_SIZE@
+Depends: python3 (>= 3.10)
+Recommends: bubblewrap, curl, ca-certificates
+Suggests: ollama
+Homepage: https://github.com/bobwdmai/bob-der
+Description: autonomous Ollama coding agent for the terminal
+ bob-der is a terminal coding agent with a Nemotron main model, a fixed
+ gpt-oss subagent, Gemma vision support, live reasoning, read-only planning,
+ copyable output, and tools for files, commands, Git, tests, and diagnostics.
+ .
+ Python dependencies are bundled so the package does not depend on a
+ distribution-specific Textual package.
