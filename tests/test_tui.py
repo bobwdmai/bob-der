@@ -176,6 +176,26 @@ class TuiTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(agent.transcript[0]["content"], pasted)
                 self.assertEqual(prompt.text, "")
 
+    async def test_ubuntu_ctrl_enter_alias_submits(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            agent = Agent(
+                StreamingRunner(model="fake-primary"),
+                Path(directory),
+                on_event=lambda *_: None,
+            )
+            app = BobDerApp(agent, SessionStore(Path(directory) / "sessions"))
+            async with app.run_test(size=(100, 36)) as pilot:
+                prompt = app.query_one("#prompt", PromptTextArea)
+                prompt.load_text("sent through Ubuntu's Ctrl+Enter sequence")
+                await pilot.press("ctrl+j")
+                await pilot.pause(0.3)
+
+                self.assertEqual(
+                    agent.transcript[0]["content"],
+                    "sent through Ubuntu's Ctrl+Enter sequence",
+                )
+                self.assertEqual(prompt.text, "")
+
 
 if __name__ == "__main__":
     unittest.main()

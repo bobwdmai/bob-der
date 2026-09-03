@@ -57,7 +57,14 @@ class PromptTextArea(TextArea):
     """A multiline prompt where Enter edits and Ctrl+Enter submits."""
 
     BINDINGS = [
-        Binding("ctrl+enter,shift+enter,ctrl+s", "submit", "Send", priority=True),
+        # Ubuntu terminals commonly encode Ctrl+Enter as the LF control code,
+        # which Textual exposes as ctrl+j rather than ctrl+enter.
+        Binding(
+            "ctrl+enter,ctrl+j,shift+enter,ctrl+s",
+            "submit",
+            "Send",
+            priority=True,
+        ),
         Binding(
             "enter,alt+enter",
             "insert_prompt_newline",

@@ -46,7 +46,7 @@ Build a self-contained Debian package:
 
 ```bash
 ./packaging/build-deb.sh
-sudo apt install ./dist/bob-der_0.9.5_all.deb
+sudo apt install ./dist/bob-der_0.9.6_all.deb
 bob-der-setup
 bob-der
 ```

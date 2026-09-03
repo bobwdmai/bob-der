@@ -20,10 +20,10 @@ class FakeResponse(io.BytesIO):
 
 class UpdaterTests(unittest.TestCase):
     def opener_for(self, package: bytes, checksum: str | None = None):
-        asset_name = "bob-der_0.9.6_all.deb"
+        asset_name = "bob-der_0.9.7_all.deb"
         payload = {
-            "tag_name": "v0.9.6",
-            "html_url": "https://github.com/bobwdmai/bob-der/releases/tag/v0.9.6",
+            "tag_name": "v0.9.7",
+            "html_url": "https://github.com/bobwdmai/bob-der/releases/tag/v0.9.7",
             "assets": [
                 {
                     "name": asset_name,
@@ -55,7 +55,7 @@ class UpdaterTests(unittest.TestCase):
         outcome = fetch_update(download=False, opener=self.opener_for(b"package"))
         self.assertTrue(outcome.available)
         self.assertIsNone(outcome.downloaded_path)
-        self.assertIn("0.9.6 is available", format_outcome(outcome))
+        self.assertIn("0.9.7 is available", format_outcome(outcome))
 
     def test_download_verifies_checksum_and_writes_package(self) -> None:
         package = b"valid deb package fixture"
